@@ -1,0 +1,64 @@
+# Portfolio optimization parameters (read with OmegaConf)
+
+budget: 300          # Total investment budget (USD)
+monitor_stocks: 10   # Total number of stocks to monitor
+yearly_return: 8     # Expected portfolio return (annual, e.g. 0.08 = 8% per year)
+total_shares_per_stock: 100   # Maximum number of shares that may be purchased per stock
+
+data:
+  years: 3           # Length of history to collect, counted back from today
+  ewm_span: 252      # Span for the exponentially weighted (rolling) mean of returns
+
+model_type: "weighted" # Currently there are two options: "weighted" or "normal"
+# Top 50 S&P 500 constituents by market capitalisation (snapshot list)
+tickers:
+  - AAPL
+  - MSFT
+  - NVDA
+  - AMZN
+  - GOOGL
+  - META
+  - BRK-B
+  - TSLA
+  - AVGO
+  - JPM
+  - LLY
+  - V
+  - UNH
+  - XOM
+  - MA
+  - COST
+  - JNJ
+  - PG
+  - HD
+  - ABBV
+  - WMT
+  - NFLX
+  - CRM
+  - BAC
+  - ORCL
+  - KO
+  - CVX
+  - MRK
+  - AMD
+  - PEP
+  - TMO
+  - ADBE
+  - LIN
+  - ACN
+  - MCD
+  - CSCO
+  - ABT
+  - WFC
+  - IBM
+  - GE
+  - PM
+  - DHR
+  - TXN
+  - QCOM
+  - INTU
+  - CAT
+  - VZ
+  - AMGN
+  - SPGI
+  - T
