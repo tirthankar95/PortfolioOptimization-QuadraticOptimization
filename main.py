@@ -2,6 +2,7 @@
 
 from pathlib import Path
 from omegaconf import OmegaConf
+from greedy import greedy_portfolio
 from optimizer import optimize_portfolio
 from portfolio.prices import collect_stock_prices, get_daily_returns
 from portfolio.stats import covariance_annualized_return, mean_annualized_return
@@ -12,7 +13,7 @@ DATA_DIR = ROOT / "data"
 
 def main() -> None:
     cfg = OmegaConf.load(ROOT / "config.yaml")
-    print(f"Budget B = {cfg.budget:,.2f}, max shares = {cfg.total_shares_per_stock}, expected return = {cfg.yearly_return}")
+    print(f"Budget B = {cfg.budget:,.2f}, expected return = {cfg.yearly_return}")
 
     prices = collect_stock_prices(list(cfg.tickers), years=cfg.data.years)
     returns = get_daily_returns(prices)
@@ -20,8 +21,8 @@ def main() -> None:
         f"({prices.index[0].date()} to {prices.index[-1].date()})")
 
     mu = mean_annualized_return(returns, span=cfg.data.ewm_span, type=cfg.model_type)
-    cov = covariance_annualized_return(returns, span=cfg.data.ewm_span, type=cfg.model_type)
-
+    cov = covariance_annualized_return(prices, span=cfg.data.ewm_span, type=cfg.model_type)
+    
     DATA_DIR.mkdir(exist_ok=True)
     prices.to_csv(DATA_DIR / "prices.csv")
     returns.to_csv(DATA_DIR / "daily_returns.csv")
@@ -35,7 +36,11 @@ def main() -> None:
     print(f"\nSaved outputs to {DATA_DIR}")
 
     x = optimize_portfolio(cfg, prices.iloc[-1], mu, cov)
-    print(f"\nOptimized portfolio: {x}")
+    x.to_csv(DATA_DIR / "optimized_portfolio.csv")
+    print(f"\nOptimized portfolio saved to {DATA_DIR / 'optimized_portfolio.csv'}")
+    x_greed = greedy_portfolio(cfg, prices.iloc[-1], mu, cov)
+    x_greed.to_csv(DATA_DIR / "greedy_portfolio.csv")
+    print(f"\nGreedy portfolio saved to {DATA_DIR / 'greedy_portfolio.csv'}")
 
 
 if __name__ == "__main__":

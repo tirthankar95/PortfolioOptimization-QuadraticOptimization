@@ -2,8 +2,8 @@
 
 budget: 300          # Total investment budget (USD)
 monitor_stocks: 10   # Total number of stocks to monitor
-yearly_return: 8     # Expected portfolio return (annual, e.g. 0.08 = 8% per year)
-total_shares_per_stock: 100   # Maximum number of shares that may be purchased per stock
+yearly_return: 12    # Expected portfolio return (annual, e.g. 0.08 = 8% per year)
+mx_share_price_percent: 0.70   # Percentage of budget that may be allocated to a single stock
 
 data:
   years: 3           # Length of history to collect, counted back from today
