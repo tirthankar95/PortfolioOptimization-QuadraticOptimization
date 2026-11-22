@@ -5,3 +5,4 @@ omegaconf
 pytest
 gurobipy
 scipy
+openpyxl

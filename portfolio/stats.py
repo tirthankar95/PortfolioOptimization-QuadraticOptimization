@@ -5,9 +5,6 @@ Both functions accept either:
     (preferred), or
   * a 2D array of shape (n stocks x m days).
 """
-
-from __future__ import annotations
-
 import numpy as np
 import pandas as pd
 

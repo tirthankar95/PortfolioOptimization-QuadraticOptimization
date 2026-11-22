@@ -1,5 +1,5 @@
 # Portfolio optimization parameters (read with OmegaConf)
-
+test: true           # Test your models against historical data
 budget: 300          # Total investment budget (USD)
 monitor_stocks: 10   # Total number of stocks to monitor
 yearly_return: 12    # Expected portfolio return (annual, e.g. 0.08 = 8% per year)

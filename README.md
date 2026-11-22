@@ -114,6 +114,7 @@ All parameters are defined in [config.yaml](/Users/tmittra/PortfolioOptimization
 
 | Parameter | Default | Meaning |
 |---|---|---|
+| `test` | `false` | Run in test mode (backtest over 6-month windows) or normal mode |
 | `budget` | `300` | Total investment budget (USD) |
 | `monitor_stocks` | `10` | Maximum number of stocks to monitor/hold |
 | `yearly_return` | `12` | Target annual portfolio return (%) |
@@ -127,7 +128,9 @@ All parameters are defined in [config.yaml](/Users/tmittra/PortfolioOptimization
 
 ## Outputs
 
-Running `main.py` generates the following CSV files in `data/`:
+### Normal Mode
+
+Running `main.py` in normal mode generates the following CSV files in `data/`:
 
 | File | Rows × Columns | Contents |
 |---|---|---|
@@ -137,6 +140,14 @@ Running `main.py` generates the following CSV files in `data/`:
 | `covariance.csv` | stocks × stocks | Annualized covariance matrix of returns |
 | `optimized_portfolio.csv` | stocks × 2 | **Gurobi solution:** `share_value` (USD invested per stock), `future_return` (expected value after 1 year) |
 | `greedy_portfolio.csv` | stocks × 2 | **Greedy solution:** same format as optimized portfolio |
+
+### Test Mode
+
+When `test: true` in `config.yaml`, the pipeline runs in test mode, which backtests portfolio strategies over multiple 6-month windows. It generates:
+
+| File | Contents |
+|---|---|
+| `all_model_results.xlsx` | Excel workbook comparing optimizer and greedy algorithms across both "weighted" and "normal" model types, with columns:<br/>- `window_start`, `window_end`: 6-month window dates<br/>- `max_stock_name`: Top performer in the window<br/>- `max_return_pct`: Return % of top stock (rounded to 2 decimals)<br/>- `weighted_optimizer_return`: Optimizer return with weighted model (rounded to 2 decimals)<br/>- `weighted_greedy_return`: Greedy return with weighted model (rounded to 2 decimals)<br/>- `normal_optimizer_return`: Optimizer return with normal model (rounded to 2 decimals)<br/>- `normal_greedy_return`: Greedy return with normal model (rounded to 2 decimals) |
 
 All outputs are regenerated on each run and are ignored by git (see `.gitignore`).
 

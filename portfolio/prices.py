@@ -1,24 +1,17 @@
 """Collect historical stock prices and compute daily returns."""
-
-from __future__ import annotations
-
-from datetime import date
-
 import pandas as pd
 import yfinance as yf
 
 
 def collect_stock_prices(
     tickers: list[str],
-    years: int = 3,
-    end: date | str | None = None,
+    start_ts: pd.Timestamp,
+    end_ts: pd.Timestamp
 ) -> pd.DataFrame:
-    """Download adjusted daily closing prices for the last ``years`` years.
+    """Download adjusted daily closing prices for the specified date range.
 
     Returns a DataFrame indexed by date with one column per ticker.
     """
-    end_ts = pd.Timestamp(end) if end is not None else pd.Timestamp(date.today())
-    start_ts = end_ts - pd.DateOffset(years=years)
 
     raw = yf.download(
         tickers,
