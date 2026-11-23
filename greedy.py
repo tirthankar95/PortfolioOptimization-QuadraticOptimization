@@ -2,12 +2,12 @@ import numpy as np
 import pandas as pd
 from omegaconf import OmegaConf
 
-def greedy_portfolio(cfg: OmegaConf, pi, mu, cov) -> pd.Series:
-    labels = pi.index if isinstance(pi, pd.Series) else pd.RangeIndex(n)
+def greedy_portfolio(cfg: OmegaConf, pi, mu, cov) -> pd.DataFrame:
     pi = np.asarray(pi, dtype=float)
     mu = np.asarray(mu, dtype=float)
     cov = np.asarray(cov, dtype=float)
     n = pi.shape[0]
+    labels = pi.index if isinstance(pi, pd.Series) else pd.RangeIndex(n)
     risk = np.diag(cov)
     if np.any(risk <= 0):
         raise ValueError("Covariance matrix diagonal must be strictly positive.")
